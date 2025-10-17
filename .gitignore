@@ -1,7 +1,34 @@
+# Archivos de logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Reportes de crash de la JVM
+hs_err_pid*
+
 ### IntelliJ IDEA ###
+# Directorio principal de configuración del proyecto (¡MUY IMPORTANTE!)
+.idea/
+
+# Archivos de definición de módulos.
+# Es mejor que se generen a partir de Maven/Gradle.
+*.iml
+
+# Directorio de salida del compilador (bytecode)
 out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+
+# Archivos de workspace (versiones antiguas)
+*.iws
+
+# Archivos de "shelf" (código guardado temporalmente)
+.idea/shelf/
+
+### Build Tools (Maven/Gradle) ###
+# Es crucial ignorar los directorios de build
+target/
+build/
+!build/wrapper/gradle-wrapper.jar
 
 ### Eclipse ###
 .apt_generated
