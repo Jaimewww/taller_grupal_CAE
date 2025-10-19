@@ -8,7 +8,7 @@ package estructuras;
 import java.util.NoSuchElementException;
 
 public class SimpleList<T> {
-    Node<T> head;
+    public Node<T> head;
 
     public SimpleList() {
         this.head = null;
