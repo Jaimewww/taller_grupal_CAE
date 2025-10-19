@@ -4,12 +4,15 @@ import estructuras.SimpleList;
 
 public class Ticket {
     private int id;
+    private String estudiante;
+    private String tipoTramite;
     private EstadoTicket estado;
     private SimpleList<Nota> historialNotas;
 
-    public Ticket(int id, EstadoTicket estado) {
-        this.id = id;
-        this.estado = estado;
+    public Ticket(String estudiante, String tipoTramite ) {
+        this.estudiante = estudiante;
+        this.tipoTramite = tipoTramite;
+        this.estado = EstadoTicket.EN_COLA;
         this.historialNotas = new SimpleList<>();
     }
 
@@ -35,6 +38,22 @@ public class Ticket {
 
     public void setHistorialNotas(SimpleList<Nota> historialNotas) {
         this.historialNotas = historialNotas;
+    }
+
+    public String getEstudiante() {
+        return estudiante;
+    }
+
+    public void setEstudiante(String estudiante) {
+        this.estudiante = estudiante;
+    }
+
+    public String getTipoTramite() {
+        return tipoTramite;
+    }
+
+    public void setTipoTramite(String tipoTramite) {
+        this.tipoTramite = tipoTramite;
     }
 
     public Nota agregarNota(String observacion) {
