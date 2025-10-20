@@ -27,7 +27,7 @@ public class Stack<T> {
         if (isEmpty()) {
             throw new EmptyStackException();
         }
-       T value = top.value;
+        T value = top.value;
         top = top.next;
         return value;
     }

@@ -1,6 +1,8 @@
 🚀 Taller Grupal: Sistema de Gestión de Casos (CAE)
 Este proyecto implementa un sistema de gestión de tickets de atención (casos) utilizando estructuras de datos personalizadas (Cola, Pila y Lista Enlazada) en Java.
-Pruebas de que trabajamos todos: https://www.canva.com/design/DAG2S5DK-vU/I3c3AwEQUK5G8kqS6vg3Ww/edit
+Pruebas de que trabajamos todos:
+
+![](https://media.canva.com/v2/image-resize/format:JPG/height:450/quality:92/uri:ifs%3A%2F%2FM%2Fe0b1e619-14a3-47d9-9dc5-12ba5fb02ead/watermark:F/width:800?csig=AAAAAAAAAAAAAAAAAAAAAEbfmGccZmi5UGyJEXjYGY26Yse0Qn0tqoc6i09RGyPa&exp=1761009040&osig=AAAAAAAAAAAAAAAAAAAAAAHNF3LkHXnkKTUTdhDJdFKTwN-qvxUy0tbsZa9mGU4t&signer=media-rpc&x-canva-quality=screen)
 
 📐 Decisiones de Diseño
 El proyecto se dividió en tres componentes principales para una clara separación de responsabilidades:
