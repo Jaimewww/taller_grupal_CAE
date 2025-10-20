@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a204d9c-362f-408a-b269-1a74472853c5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dominio/EstadoTicket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domine/TicketState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dominio/Nota.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domine/Note.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dominio/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domine/Ticket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/estructuras/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/estructures/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/estructuras/Queue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/estructures/Queue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/estructuras/SimpleList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/estructures/SimpleList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/estructuras/Stack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/estructures/Stack.java" afterDir="false" />
-    </list>
+    <list default="true" id="0a204d9c-362f-408a-b269-1a74472853c5" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,7 +80,7 @@
       <workItem from="1760709939113" duration="162000" />
       <workItem from="1760807896184" duration="53000" />
       <workItem from="1760811878366" duration="7612000" />
-      <workItem from="1760905441032" duration="3722000" />
+      <workItem from="1760905441032" duration="4027000" />
     </task>
     <servers />
   </component>
