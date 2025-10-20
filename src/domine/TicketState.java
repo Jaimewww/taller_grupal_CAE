@@ -1,6 +1,6 @@
-package dominio;
+package domine;
 
-public enum EstadoTicket {
+public enum TicketState {
     EN_COLA,
     EN_ATENCION,
     COMPLETADO

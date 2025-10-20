@@ -3,7 +3,7 @@
  * (pushFront, pushBack, find, remove, size, isEmpty, clear)
  * @author Jaime Landázuri
  */
-package estructuras;
+package estructures;
 
 import java.util.NoSuchElementException;
 

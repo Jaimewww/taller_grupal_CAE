@@ -4,7 +4,7 @@
  * @author Jaime Landázuri
  */
 
-package estructuras;
+package estructures;
 
 import java.util.EmptyStackException;
 

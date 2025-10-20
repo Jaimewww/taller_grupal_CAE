@@ -1,10 +1,10 @@
-import dominio.EstadoTicket;
-import dominio.Nota;
-import dominio.Ticket;
-import estructuras.Queue;
-import estructuras.Stack;
-import estructuras.SimpleList;
-import estructuras.Node;
+import domine.TicketState;
+import domine.Note;
+import domine.Ticket;
+import estructures.Queue;
+import estructures.Stack;
+import estructures.SimpleList;
+import estructures.Node;
 
 import java.util.Scanner;
 
@@ -12,8 +12,8 @@ public class Main {
 
     static Queue<Ticket> ticketQueue = new Queue<>();
     static Queue<Ticket> finishedCases = new Queue<>();
-    static Stack<Nota> undoStack = new Stack<>();
-    static Stack<Nota> redoStack = new Stack<>();
+    static Stack<Note> undoStack = new Stack<>();
+    static Stack<Note> redoStack = new Stack<>();
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -49,16 +49,16 @@ public class Main {
     private static void handleMenuOption(int option) {
         switch (option) {
             case 1:
-                recibirNuevoCaso();
+                receiveNewCase();
                 break;
             case 2:
                 atenderSiguienteCaso();
                 break;
             case 3:
-                verCasosEnEspera();
+                viewPendingCases();
                 break;
             case 4:
-                consultarHistorial();
+                showHistory();
                 break;
             case 0:
                 System.out.println("Saliendo del sistema...");
@@ -68,13 +68,13 @@ public class Main {
         }
     }
 
-    private static void recibirNuevoCaso() {
+    private static void receiveNewCase() {
         System.out.print("Nombre del estudiante: ");
-        String nombre = sc.nextLine();
+        String name = sc.nextLine();
         System.out.print("Tipo de trámite: ");
-        String tramite = sc.nextLine();
+        String procedure = sc.nextLine();
 
-        Ticket ticket = new Ticket(nombre, tramite);
+        Ticket ticket = new Ticket(name, procedure);
         ticket.setId(ticketQueue.size() + finishedCases.size() + 1);
         ticketQueue.enqueue(ticket);
 
@@ -88,8 +88,8 @@ public class Main {
         }
 
         Ticket ticket = ticketQueue.dequeue();
-        ticket.setEstado(EstadoTicket.EN_ATENCION);
-        System.out.println("Atendiendo caso ID: [" + ticket.getId() + "] a nombre de: [" + ticket.getEstudiante()+"]");
+        ticket.setState(TicketState.EN_ATENCION);
+        System.out.println("Atendiendo caso ID: [" + ticket.getId() + "] a nombre de: [" + ticket.getStudent()+"]");
 
         int option;
         do {
@@ -104,8 +104,8 @@ public class Main {
                 case 1:
                     System.out.print("Ingrese la observación: ");
                     String obs = sc.nextLine();
-                    Nota nota = ticket.agregarNota(obs);
-                    undoStack.push(nota);
+                    Note note = ticket.agregarNota(obs);
+                    undoStack.push(note);
                     redoStack = new Stack<>();
                     System.out.println("Nota agregada correctamente");
                     break;
@@ -113,8 +113,8 @@ public class Main {
                     if (undoStack.isEmpty()) {
                         System.out.println("No hay notas por deshacer");
                     } else {
-                        Nota last = undoStack.pop();
-                        ticket.getHistorialNotas().remove(last);
+                        Note last = undoStack.pop();
+                        ticket.getNoteHistory().remove(last);
                         redoStack.push(last);
                         System.out.println("Última nota deshecha correctamente");
                     }
@@ -123,14 +123,14 @@ public class Main {
                     if (redoStack.isEmpty()) {
                         System.out.println("No hay notas por rehacer");
                     } else {
-                        Nota redo = redoStack.pop();
-                        ticket.getHistorialNotas().pushBack(redo);
+                        Note redo = redoStack.pop();
+                        ticket.getNoteHistory().pushBack(redo);
                         undoStack.push(redo);
                         System.out.println("Nota rehecha correctamente");
                     }
                     break;
                 case 4:
-                    ticket.setEstado(EstadoTicket.COMPLETADO);
+                    ticket.setState(TicketState.COMPLETADO);
                     finishedCases.enqueue(ticket);
                     System.out.println("Caso Nro. [" + ticket.getId() + "] finalizado");
                     break;
@@ -140,7 +140,7 @@ public class Main {
         } while (option != 4);
     }
 
-    private static void verCasosEnEspera() {
+    private static void viewPendingCases() {
         System.out.println("\nCasos en espera: " + ticketQueue.size());
         if (ticketQueue.isEmpty()) {
             System.out.println("No hay casos en espera");
@@ -150,14 +150,14 @@ public class Main {
         Queue<Ticket> temp = new Queue<>();
         while (!ticketQueue.isEmpty()) {
             Ticket t = ticketQueue.dequeue();
-            System.out.println("ID: ["+ t.getId() +"] --- Nombre: ["+ t.getEstudiante() +"] --- Tipo de trámite: ["+t.getTipoTramite()+"]");
+            System.out.println("ID: ["+ t.getId() +"] --- Nombre: ["+ t.getStudent() +"] --- Tipo de trámite: ["+t.getProcedureType()+"]");
             temp.enqueue(t);
         }
 
         while (!temp.isEmpty()) ticketQueue.enqueue(temp.dequeue());
     }
 
-    private static void consultarHistorial() {
+    private static void showHistory() {
         System.out.print("Ingrese ID del caso: ");
         int id = getIntInput();
         Ticket found = null;
@@ -188,16 +188,16 @@ public class Main {
         }
 
         System.out.println("\nHistorial del caso " + found.getId());
-        System.out.println("Estudiante: " + found.getEstudiante());
-        System.out.println("Trámite: " + found.getTipoTramite());
-        System.out.println("Estado: " + found.getEstado());
+        System.out.println("Estudiante: " + found.getStudent());
+        System.out.println("Trámite: " + found.getProcedureType());
+        System.out.println("Estado: " + found.getState());
         System.out.println("Notas:");
 
-        SimpleList<Nota> notas = found.getHistorialNotas();
-        if (notas.isEmpty()) {
+        SimpleList<Note> notes = found.getNoteHistory();
+        if (notes.isEmpty()) {
             System.out.println("No hay notas registradas");
         } else {
-            Node<Nota> current = notas.head;
+            Node<Note> current = notes.head;
             while (current != null) {
                 System.out.println("- " + current.value);
                 current = current.next;

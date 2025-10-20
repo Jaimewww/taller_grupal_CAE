@@ -1,13 +1,13 @@
-package dominio;
+package domine;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Nota {
+public class Note {
     private String observacion;
     private LocalDateTime fecha;
 
-    public Nota(String observacion) {
+    public Note(String observacion) {
         this.observacion = observacion;
         this.fecha = LocalDateTime.now();
     }

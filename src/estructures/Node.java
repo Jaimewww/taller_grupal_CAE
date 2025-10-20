@@ -1,4 +1,4 @@
-package estructuras;
+package estructures;
 
 public class Node<T> {
     public T value;

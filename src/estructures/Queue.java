@@ -1,4 +1,4 @@
-package estructuras;
+package estructures;
 
 import java.util.NoSuchElementException;
 
