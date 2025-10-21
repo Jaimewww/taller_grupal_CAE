@@ -116,7 +116,7 @@ public class Main {
                         Note last = undoStack.pop();
                         ticket.getNoteHistory().remove(last);
                         redoStack.push(last);
-                        System.out.println("Última nota deshecha correctamente");
+                        System.out.println("Última nota deshecha correctamente -- " + last);
                     }
                     break;
                 case 3:
@@ -126,7 +126,7 @@ public class Main {
                         Note redo = redoStack.pop();
                         ticket.getNoteHistory().pushBack(redo);
                         undoStack.push(redo);
-                        System.out.println("Nota rehecha correctamente");
+                        System.out.println("Nota rehecha correctamente -- " + redo);
                     }
                     break;
                 case 4:
