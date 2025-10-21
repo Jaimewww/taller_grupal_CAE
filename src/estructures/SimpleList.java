@@ -7,7 +7,7 @@ package estructures;
 
 import java.util.NoSuchElementException;
 
-public class SimpleList<T> {
+public class SimplyeList<T> {
     public Node<T> head;
 
     public SimpleList() {
