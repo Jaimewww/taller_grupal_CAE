@@ -59,4 +59,44 @@ public class Queue<T> {
         }
         return count;
     }
+
+    public T find(T key){
+        Node<T> current = front;
+        while(current != null){
+            if(current.value.equals(key)){
+                return current.value;
+            }
+            current = current.next;
+        }
+        throw new NoSuchElementException();
+    }
+
+    public T remove(T key){
+        Node<T> current = front;
+        Node<T> prev = null;
+
+        // Si el nodo a eliminar es el front
+        if(current != null && current.value.equals(key)){
+            front = current.next;
+            if(front == null){
+                rear = null;
+            }
+            return current.value;
+        }
+
+        while(current != null && !current.value.equals(key)){
+            prev = current;
+            current = current.next;
+        }
+
+        if(current == null){
+            throw new NoSuchElementException();
+        }
+
+        prev.next = current.next;
+        if(current == rear){
+            rear = prev;
+        }
+        return current.value;
+    }
 }

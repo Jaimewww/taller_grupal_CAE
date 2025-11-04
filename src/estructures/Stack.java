@@ -55,4 +55,9 @@ public class Stack<T> {
         }
         return count;
     }
+
+    public void clear() {
+        top = null;
+    }
+
 }

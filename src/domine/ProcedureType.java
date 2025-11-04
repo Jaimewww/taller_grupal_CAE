@@ -2,8 +2,8 @@ package domine;
 
 public enum ProcedureType {
     CERTIFICADO,
-    MATRÍCULA,
-    HOMOLOGACIÓN,
+    MATRICULA,
+    HOMOLOGACION,
     RETIRO_ASIGNATURA,
     OTRO;
 

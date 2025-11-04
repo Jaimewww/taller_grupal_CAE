@@ -2,6 +2,8 @@ package domine;
 
 public enum TicketState {
     EN_COLA,
+    URGENTE,
     EN_ATENCION,
-    COMPLETADO
+    COMPLETADO,
+    PENDIENTE_DOCS
 }
