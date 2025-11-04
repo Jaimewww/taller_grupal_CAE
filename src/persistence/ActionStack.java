@@ -1,21 +1,21 @@
 
 package persistence;
 
-import domine.Action;
+import controller.IAction;
 import estructures.Stack;
 import java.util.EmptyStackException;
 
 public class ActionStack {
 
-    private Stack<Action> undoStack;
-    private Stack<Action> redoStack;
+    private Stack<IAction> undoStack;
+    private Stack<IAction> redoStack;
 
     public ActionStack() {
         this.undoStack = new Stack<>();
         this.redoStack = new Stack<>();
     }
 
-    public void registerAction(Action a) {
+    public void registerAction(IAction a) {
         undoStack.push(a);
         clearRedo();
     }
@@ -26,7 +26,7 @@ public class ActionStack {
             throw new EmptyStackException();
         }
 
-        Action a = undoStack.pop();
+        IAction a = undoStack.pop();
         a.undo();
         redoStack.push(a);
     }
@@ -38,7 +38,7 @@ public class ActionStack {
             throw new EmptyStackException(); // Throws your Stack's exception
         }
 
-        Action a = redoStack.pop();
+        IAction a = redoStack.pop();
         a.execute();
         undoStack.push(a);
     }
