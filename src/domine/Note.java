@@ -4,21 +4,30 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Note {
-    private String observacion;
-    private LocalDateTime fecha;
+    private String observation;
+    private LocalDateTime timestamp;
 
-    public Note(String observacion) {
-        this.observacion = observacion;
-        this.fecha = LocalDateTime.now();
+    public Note(String observation) {
+        this.observation = observation;
+        this.timestamp = LocalDateTime.now();
     }
 
-    public String getObservacion() {
-        return observacion;
+    public Note(String observation, LocalDateTime timestamp) {
+        this.observation = observation;
+        this.timestamp = timestamp;
+    }
+
+    public String getObservation() {
+        return observation;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return String.format("[%s] %s", fecha.format(formatter), observacion);
+        return String.format("[%s] %s", timestamp.format(formatter), observation);
     }
 }
