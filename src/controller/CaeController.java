@@ -187,9 +187,9 @@ public class CaeController {
                 sourceQueue = attentionQueue.getNormalQueue(); // fallback razonable
             }
 
-            Queue<Ticket> completedQueue = attentionQueue.getCompletedQueue();
+            SimpleList<Ticket> attendedHistory = attentionQueue.getAttendedHistory();
 
-            CloseCaseCommand closeCmd = new CloseCaseCommand(ticket, sourceQueue, completedQueue);
+            CloseCaseCommand closeCmd = new CloseCaseCommand(ticket, sourceQueue, attendedHistory);
             closeCmd.execute();
             actionStack.registerAction(closeCmd);
 
