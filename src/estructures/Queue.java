@@ -99,4 +99,12 @@ public class Queue<T> {
         }
         return current.value;
     }
+
+    public Node<T> getFront() {
+        return front;
+    }
+
+    public void setFront(Node<T> front) {
+        this.front = front;
+    }
 }
