@@ -54,6 +54,8 @@ public final class StateMachine {
                 "Atender un ticket urgente");
         addTransition(TicketState.URGENTE, TicketState.PENDIENTE_DOCS,
                 "Pendiente de documentos mientras es urgente");
+        addTransition(TicketState.URGENTE, TicketState.EN_COLA,
+                "Cambiar un ticket urgente de vuelta a la cola de atención normal");
 
         // EN_ATENCION -> COMPLETADO, PENDIENTE_DOCS
         addTransition(TicketState.EN_ATENCION, TicketState.COMPLETADO,
@@ -117,6 +119,7 @@ public final class StateMachine {
      * @return true si la transición está permitida
      */
     public boolean isValidTransition(TicketState from, TicketState to) {
+        if(from.equals(to)) return true;
         Objects.requireNonNull(from, "from no puede ser null");
         Objects.requireNonNull(to, "to no puede ser null");
         synchronized (lock) {

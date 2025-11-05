@@ -1,3 +1,1 @@
-Rank;ID;Student;Procedure;Notes
-1;0;WILSON;MATRICULA;PENDIENTE_DOCS;0
-2;0;ALEJANDRO;HOMOLOGACION;URGENTE;0
+﻿Rank,ID,Student,Procedure,Notes
