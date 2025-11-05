@@ -163,7 +163,7 @@ public class ReportManager {
     }
 
     private String formatCsvLine(Ticket t) {
-        return t.getId() + ";" + cleanCsv(t.getStudent()) + ";" + cleanCsv(t.getProcedureType())
+        return t.getId() + ";" + cleanCsv(t.getStudent()) + ";" + cleanCsv(t.getProcedureType().toString())
                 + ";" + t.getState() + ";" + t.getNoteHistory().size();
     }
 
