@@ -63,7 +63,7 @@ public class Main {
                 System.out.println((i + 1) + ". " + types[i]);
             }
             int choice = InputValidator.getIntInRange("Opción: ", 1, types.length);
-            String procedure = types[choice - 1].name();
+            ProcedureType procedure = types[choice - 1];
 
             Ticket ticket = new Ticket(name, procedure);
             ticket.setId(ticketQueue.size() + finishedCases.size() + 1);
