@@ -5,11 +5,11 @@ import estructures.SimpleList;
 public class Ticket {
     private int id;
     private String student;
-    private String procedureType;
+    private ProcedureType procedureType;
     private TicketState state;
     private SimpleList<Note> noteHistory;
 
-    public Ticket(String student, String procedureType ) {
+    public Ticket(String student, ProcedureType procedureType ) {
         this.student = student;
         this.procedureType = procedureType;
         this.state = TicketState.EN_COLA;
@@ -40,7 +40,7 @@ public class Ticket {
         return student;
     }
 
-    public String getProcedureType() {
+    public ProcedureType getProcedureType() {
         return procedureType;
     }
 

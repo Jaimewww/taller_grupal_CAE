@@ -1,6 +1,7 @@
 package persistence;
 
 import domine.Note;
+import domine.ProcedureType;
 import domine.Ticket;
 import domine.TicketState;
 import estructures.Node;
@@ -45,7 +46,7 @@ public class PersistenceManager {
                 String[] fields = {
                         String.valueOf(t.getId()),
                         toCsv(t.getStudent()),
-                        toCsv(t.getProcedureType()),
+                        toCsv(t.getProcedureType().toString()),
                         toCsv(t.getState().name())
                 };
                 writer.write(String.join(",", fields));
@@ -100,7 +101,8 @@ public class PersistenceManager {
                     String[] fields = line.split(",", 4);
                     int id = Integer.parseInt(fields[0]);
                     String student = fields[1].replace("\"", "");
-                    String procedure = fields[2].replace("\"", "");
+                    ProcedureType procedure = ProcedureType.valueOf(fields[2].replace("\"", ""));
+
                     TicketState state = TicketState.valueOf(fields[3].replace("\"", ""));
 
                     Ticket ticket = new Ticket(student, procedure);

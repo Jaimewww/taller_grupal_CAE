@@ -31,14 +31,14 @@ public class AttentionQueue {
 
     public Ticket nextTicket() {
         if (!urgentQueue.isEmpty()) {
-            return urgentQueue.dequeue();
+            return urgentQueue.peek();   // <-- antes: dequeue()
         }
 
         if (normalQueue.isEmpty()) {
             throw new NoSuchElementException("No tickets in any queue.");
         }
 
-        return normalQueue.dequeue();
+        return normalQueue.peek();       // <-- antes: dequeue()
     }
 
     public void moveToHistory(Ticket t) {
@@ -51,5 +51,13 @@ public class AttentionQueue {
 
     public int getTotalWaiting() {
         return normalQueue.size() + urgentQueue.size();
+    }
+
+    public Queue<Ticket> getNormalQueue() {
+        return normalQueue;
+    }
+
+    public Queue<Ticket> getUrgentQueue() {
+        return urgentQueue;
     }
 }
