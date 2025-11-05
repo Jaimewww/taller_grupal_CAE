@@ -114,6 +114,7 @@ public class CaeController {
 
         Ticket t = new Ticket(student, type);
         t.setState(urgentFlag ? TicketState.URGENTE : TicketState.EN_COLA);
+        t.setId(attentionQueue.getTotalWaiting() + attentionQueue.getAttendedHistory().size() + 1);
 
         try {
             Queue<Ticket> targetQueue = urgentFlag ? attentionQueue.getUrgentQueue() : attentionQueue.getNormalQueue();
