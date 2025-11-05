@@ -3,6 +3,8 @@ package estructures;
 
 import domine.ProcedureType;
 import domine.Ticket;
+import domine.TicketState;
+
 import java.util.NoSuchElementException;
 
 
@@ -20,7 +22,7 @@ public class AttentionQueue {
 
     public void addTicket(Ticket t) {
         // The PDF didn't specify, so we use the ProcedureType from the domain
-        if (t.getProcedureType().equals(ProcedureType.OTRO.name())) {
+        if (t.getState().equals(TicketState.URGENTE)) {
             urgentQueue.enqueue(t);
         } else {
             normalQueue.enqueue(t);
@@ -28,7 +30,7 @@ public class AttentionQueue {
     }
 
     public Ticket nextTicket() {
-        if (hasUrgentTickets()) {
+        if (!urgentQueue.isEmpty()) {
             return urgentQueue.dequeue();
         }
 
@@ -37,10 +39,6 @@ public class AttentionQueue {
         }
 
         return normalQueue.dequeue();
-    }
-
-    public boolean hasUrgentTickets() {
-        return !urgentQueue.isEmpty();
     }
 
     public void moveToHistory(Ticket t) {
