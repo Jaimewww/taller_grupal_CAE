@@ -29,14 +29,14 @@ public class AttentionQueue {
 
     public Ticket nextTicket() {
         if (hasUrgentTickets()) {
-            return urgentQueue.dequeue();
+            return urgentQueue.peek();   // <-- antes: dequeue()
         }
 
         if (normalQueue.isEmpty()) {
             throw new NoSuchElementException("No tickets in any queue.");
         }
 
-        return normalQueue.dequeue();
+        return normalQueue.peek();       // <-- antes: dequeue()
     }
 
     public boolean hasUrgentTickets() {
