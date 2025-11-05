@@ -346,7 +346,7 @@ public class CaeController {
         return null;
     }
 
-    private SimpleList<Ticket> buildPendingSnapshotFromQueues() {
+    public SimpleList<Ticket> buildPendingSnapshotFromQueues() {
         SimpleList<Ticket> sl = new SimpleList<>();
         try {
             Queue<Ticket> urgentQ = attentionQueue.getUrgentQueue();
