@@ -54,4 +54,12 @@ public class AttentionQueue {
     public int getTotalWaiting() {
         return normalQueue.size() + urgentQueue.size();
     }
+
+    public Queue<Ticket> getNormalQueue() {
+        return normalQueue;
+    }
+
+    public Queue<Ticket> getUrgentQueue() {
+        return urgentQueue;
+    }
 }
