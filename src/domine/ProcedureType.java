@@ -6,9 +6,4 @@ public enum ProcedureType {
     HOMOLOGACION,
     RETIRO_ASIGNATURA,
     OTRO;
-
-    @Override
-    public String toString() {
-        return name().replace('_', ' ');
-    }
 }

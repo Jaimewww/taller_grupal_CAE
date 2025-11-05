@@ -3,12 +3,12 @@ package controller.command;
 import controller.IAction;
 import domine.Ticket;
 import domine.TicketState;
+import estructures.Node;
 import estructures.Queue;
 import estructures.SimpleList;
 
 public class CloseCaseCommand implements IAction {
     private Ticket ticket;
-    private TicketState previousState;
     private Queue<Ticket> sourceQueue;
     private SimpleList<Ticket> attendedHistory;
 
@@ -21,8 +21,6 @@ public class CloseCaseCommand implements IAction {
         this.ticket = ticket;
         this.sourceQueue = sourceQueue;
         this.attendedHistory = attendedHistory;
-        
-        this.previousState = ticket.getState();
     }
 
     @Override
@@ -35,10 +33,13 @@ public class CloseCaseCommand implements IAction {
 
     @Override
     public void undo() {
-        ticket.setState(this.previousState);
+        ticket.setState(TicketState.EN_COLA);
 
         attendedHistory.remove(ticket);
 
-        sourceQueue.enqueue(ticket);
+        Node<Ticket> newFront = new Node<>(ticket);
+        newFront.next = sourceQueue.getFront();
+
+        sourceQueue.setFront(newFront);
     }
 }

@@ -7,7 +7,6 @@ import domine.Note;
 import controller.command.AddTicketCommand;
 import controller.command.AddNoteCommand;
 import controller.command.CloseCaseCommand;
-import controller.ActionStack;
 import persistence.PersistenceManager;
 import reports.ReportManager;
 import util.StateMachine;
@@ -16,7 +15,6 @@ import estructures.AttentionQueue;
 import estructures.Queue;
 import estructures.SimpleList;
 import estructures.Node;
-import controller.CLIHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -249,6 +247,12 @@ public class CaeController {
             if (!stateMachine.isValidTransition(from, newState)) {
                 cli.printAlert("Transición inválida: " + from + " -> " + newState);
                 throw new IllegalStateException("Transición inválida");
+            }
+            if(newState == TicketState.EN_ATENCION) {
+                if(attentionQueue.getNormalQueue().peek().getState() == TicketState.EN_ATENCION || attentionQueue.getUrgentQueue().peek().getState() == TicketState.EN_ATENCION) {
+                    cli.printAlert("Ya hay un ticket en atención. No se puede cambiar el estado.");
+                    throw new IllegalStateException("Ya hay un ticket en atención");
+                }
             }
             t.setState(newState);
 

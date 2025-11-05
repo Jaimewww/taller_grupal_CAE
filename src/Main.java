@@ -230,6 +230,7 @@ public class Main {
                         atendiendo = false;
                         break;
                     case 4:
+                        t.setState(TicketState.EN_COLA);
                         atendiendo = false;
                         break;
                 }
