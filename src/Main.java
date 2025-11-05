@@ -337,7 +337,7 @@ public class Main {
             case 1:
                 boolean saveCsv = askYesNo("¿Exportar CSV? (s/n): ");
                 String path = null;
-                if (saveCsv) path = askString("Ruta CSV (ej: data/pending_by_type.csv): ");
+                if (saveCsv) path = askString("Ruta CSV (ej: pending_by_type.csv): ");
                 // Usa reportManager via controller (firma sugerida: generateReportPendingByType)
                 controller.generateReportPendingByType(saveCsv, path);
                 System.out.println("Reporte generado.");
