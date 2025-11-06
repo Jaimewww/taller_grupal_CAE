@@ -248,12 +248,25 @@ public class CaeController {
                 cli.printAlert("Transición inválida: " + from + " -> " + newState);
                 throw new IllegalStateException("Transición inválida");
             }
-            if(newState == TicketState.EN_ATENCION) {
-                if(attentionQueue.getNormalQueue().peek().getState() == TicketState.EN_ATENCION || attentionQueue.getUrgentQueue().peek().getState() == TicketState.EN_ATENCION) {
-                    cli.printAlert("Ya hay un ticket en atención. No se puede cambiar el estado.");
-                    throw new IllegalStateException("Ya hay un ticket en atención");
-                }
+            if(newState == TicketState.EN_ATENCION && !attentionQueue.getUrgentQueue().isEmpty() && !attentionQueue.getNormalQueue().isEmpty()) {
+
+                    if(attentionQueue.getNormalQueue().peek().getState() == TicketState.EN_ATENCION || attentionQueue.getUrgentQueue().peek().getState() == TicketState.EN_ATENCION) {
+                        cli.printAlert("Ya hay un ticket en atención. No se puede cambiar el estado.");
+                        throw new IllegalStateException("Ya hay un ticket en atención");
+                    }
+
             }
+
+            if(newState == TicketState.URGENTE) {
+                attentionQueue.getNormalQueue().remove(t);
+                attentionQueue.getUrgentQueue().enqueue(t);
+            }
+
+            if(t.getState() == TicketState.URGENTE && newState == TicketState.EN_COLA) {
+                attentionQueue.getUrgentQueue().remove(t);
+                attentionQueue.getNormalQueue().enqueue(t);
+            }
+
             t.setState(newState);
 
             try {

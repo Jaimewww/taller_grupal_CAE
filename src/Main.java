@@ -2,7 +2,6 @@
 import java.util.*;
 import java.time.format.DateTimeFormatter;
 
-// importa paquetes del proyecto (ajusta los nombres de paquete si son distintos)
 import domine.*;
 import estructures.*;
 import persistence.*;
@@ -17,6 +16,8 @@ import controller.*;
  * ajusta la creación correspondiente comentada más abajo.
  */
 public class Main {
+
+    static final CLIHelper cliHelper = new CLIHelper();
 
     private static final Scanner scanner = new Scanner(System.in);
     private static CaeController controller;
@@ -58,15 +59,7 @@ public class Main {
             // Reloj del sistema (abstracción)
             SystemClock clock = new SystemClock();
 
-            // Helper de CLI (para que controller lo use internamente)
-            CLIHelper cliHelper;
-            try {
-                cliHelper = new CLIHelper();
-            } catch (Throwable t) {
-                // Si CLIHelper requiere parámetros, deja una instancia mínima (null es desaconsejado).
-                cliHelper = null;
-                System.err.println("Aviso: CLIHelper no pudo instanciarse por defecto. Ajusta el Main.java. >> " + t.getMessage());
-            }
+
 
             // ----------------------------
             // Crear controlador con la firma requerida
@@ -90,9 +83,9 @@ public class Main {
                 System.err.println("Aviso: error al invocar start() del controlador: " + ex.getMessage());
             }
 
-            // ----------------------------
-            // Bucle principal (CLI simple)
-            // ----------------------------
+            // ---------------
+            // Bucle principal
+            // ---------------
             boolean running = true;
             while (running) {
                 printHeader();
@@ -127,7 +120,7 @@ public class Main {
                         running = false;
                         break;
                     default:
-                        System.out.println("Opción inválida.");
+                        cliHelper.printError("Opcion invalida!");
                 }
             }
 
@@ -140,7 +133,7 @@ public class Main {
                 System.err.println("Error al guardar/cerrar: " + ex.getMessage());
             }
 
-            System.out.println("✓(Operación finalizada)✓ - Saliendo...");
+            cliHelper.printSuccess("✓(Operación finalizada)✓ - Saliendo...");
 
         } catch (Throwable t) {
             System.err.println("Error crítico en la inicialización: " + t.getMessage());
@@ -150,9 +143,9 @@ public class Main {
         }
     }
 
-    // ---------------------------------------------------------
-    // Menú y acciones (usa controller con la API documentada)
-    // ---------------------------------------------------------
+    // ---------------
+    // Menú y acciones
+    // ---------------
     private static void printHeader() {
         System.out.println("======================================");
         System.out.println("   Sistema de Atención de Tickets");
@@ -298,7 +291,7 @@ public class Main {
                 controller.changeTicketState(id, target);
                 System.out.println("✓(Estado cambiado)✓ -> " + target);
             } catch (Exception ex) {
-                System.out.println("No se pudo consultar StateMachine; seleccione estado manualmente:");
+                System.out.println("No se pudo consultar StateMachine; seleccione estado manualmente:" + ex.getMessage());
                 TicketState target = askTicketState();
                 controller.changeTicketState(id, target);
                 System.out.println("✓(Estado cambiado)✓ -> " + target);
@@ -338,7 +331,6 @@ public class Main {
                 boolean saveCsv = askYesNo("¿Exportar CSV? (s/n): ");
                 String path = null;
                 if (saveCsv) path = askString("Ruta CSV (ej: pending_by_type.csv): ");
-                // Usa reportManager via controller (firma sugerida: generateReportPendingByType)
                 controller.generateReportPendingByType(saveCsv, path);
                 System.out.println("Reporte generado.");
                 break;
@@ -370,7 +362,13 @@ public class Main {
         sb.append("ID: ").append(t.getId())
                 .append(" | ").append(t.getStudent())
                 .append(" | ").append(t.getProcedureType())
-                .append(" | Estado: ").append(t.getState());
+                .append(" | Estado: ").append(t.getState())
+                .append(" | Notas:");
+        for(int i = 0; i < t.getNoteHistory().size(); i++) {
+                sb.append("\n\t- ");
+            Note n = t.getNoteHistory().findByIndex(i);
+            sb.append("[").append(n.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))).append(" - ").append(n.getObservation()).append("]");
+        }
         return sb.toString();
     }
 

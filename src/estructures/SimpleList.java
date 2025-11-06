@@ -91,4 +91,20 @@ public class SimpleList<T> {
     public void clear(){
         head = null;
     }
+
+    public T findByIndex(int index){
+        if(index < 0){
+            throw new IndexOutOfBoundsException();
+        }
+        Node<T> current = head;
+        int count = 0;
+        while(current != null){
+            if(count == index){
+                return current.value;
+            }
+            count++;
+            current = current.next;
+        }
+        throw new IndexOutOfBoundsException();
+    }
 }
