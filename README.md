@@ -9,13 +9,12 @@
 2. [Funcionalidades principales](#funcionalidades-principales)
 3. [Requisitos y tecnologías](#requisitos-y-tecnologías)
 4. [Instalación y ejecución](#instalación-y-ejecución)
-5. [Estructura del proyecto — Clases principales](#estructura-del-proyecto---clases-principales)
+5. [Estructura del proyecto — Clases principales](#estructura-del-proyecto--clases-principales)
 6. [Persistencia y formatos sugeridos](#persistencia-y-formatos-sugeridos)
-7. [Reportes y exportación](#reportes-y-exportación)
-8. [Pruebas unitarias (clases a testear)](#pruebas-unitarias-clases-a-testear)
-9. [Evidencias / Capturas](#evidencias--capturas)
-10. [Decisiones de diseño y casos borde](#decisiones-de-diseño-y-casos-borde)
-11. [Contacto](#contacto)
+7. [Pruebas unitarias (clases a testear)](#pruebas-unitarias-clases-a-testear)
+8. [Evidencias / Capturas](#evidencias--capturas)
+9. [Decisiones de diseño y casos borde](#decisiones-de-diseño-y-casos-borde)
+10. [Contacto](#contacto)
 
 ---
 
