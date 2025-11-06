@@ -17,7 +17,7 @@ public class ReportManager {
      * If exportCsv is true, save CSV at csvPath.
      */
     public void showPendingByType(SimpleList<Ticket> tickets, boolean exportCsv, String csvPath) {
-        csvPath = "data/"+csvPath;
+        csvPath = "data/"+csvPath+".csv";
         StringBuilder console = new StringBuilder();
 
         console.append("=== Pending Tickets: URGENT ===\n");
@@ -65,7 +65,7 @@ public class ReportManager {
      * Show completed tickets and optionally export CSV.
      */
     public void showCompleted(SimpleList<Ticket> tickets, boolean exportCsv, String csvPath) {
-        csvPath = "data/"+csvPath;
+        csvPath = "data/"+csvPath+".csv";
         StringBuilder console = new StringBuilder();
         console.append("=== Completed Tickets ===\n");
 
@@ -102,7 +102,7 @@ public class ReportManager {
      * Uses selection sort on an array (no Java Collections).
      */
     public void showTopKByNotes(SimpleList<Ticket> tickets, int k, boolean exportCsv, String csvPath) {
-        csvPath = "data/"+csvPath;
+        csvPath = "data/"+csvPath+".csv";
         int n = tickets.size();
         if (n == 0) {
             System.out.println("No tickets available.");

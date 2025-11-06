@@ -16,7 +16,7 @@ import controller.*;
  * ajusta la creación correspondiente comentada más abajo.
  */
 public class Main {
-
+    
     static final CLIHelper cliHelper = new CLIHelper();
 
     private static final Scanner scanner = new Scanner(System.in);
@@ -41,7 +41,7 @@ public class Main {
             } catch (Throwable t) {
                 // fallback minimal si no existe constructor por defecto
                 persistenceManager = null;
-                System.err.println("Aviso: PersistenceManager no pudo instanciarse por defecto. Ajusta el Main.java. >> " + t.getMessage());
+                cliHelper.printError("Aviso: PersistenceManager no pudo instanciarse por defecto. Ajusta el Main.java. >> " + t.getMessage());
             }
 
             // Reportes
@@ -50,7 +50,7 @@ public class Main {
                 reportManager = new ReportManager();
             } catch (Throwable t) {
                 reportManager = null;
-                System.err.println("Aviso: ReportManager no pudo instanciarse por defecto. Ajusta el Main.java. >> " + t.getMessage());
+                cliHelper.printError("Aviso: ReportManager no pudo instanciarse por defecto. Ajusta el Main.java. >> " + t.getMessage());
             }
 
             // State machine
@@ -59,7 +59,7 @@ public class Main {
             // Reloj del sistema (abstracción)
             SystemClock clock = new SystemClock();
 
-
+            
 
             // ----------------------------
             // Crear controlador con la firma requerida
@@ -80,7 +80,7 @@ public class Main {
             } catch (NoSuchMethodError | AbstractMethodError e) {
                 // ignora si no existe
             } catch (Exception ex) {
-                System.err.println("Aviso: error al invocar start() del controlador: " + ex.getMessage());
+                cliHelper.printError("Aviso: error al invocar start() del controlador: " + ex.getMessage());
             }
 
             // ---------------
@@ -120,7 +120,7 @@ public class Main {
                         running = false;
                         break;
                     default:
-                        cliHelper.printError("Opcion invalida!");
+                        cliHelper.printError("!(Opcion invalida)!");
                 }
             }
 
@@ -130,13 +130,13 @@ public class Main {
             } catch (NoSuchMethodError | AbstractMethodError e) {
                 // ignore
             } catch (Exception ex) {
-                System.err.println("Error al guardar/cerrar: " + ex.getMessage());
+                cliHelper.printError("Error al guardar/cerrar: " + ex.getMessage());
             }
 
             cliHelper.printSuccess("✓(Operación finalizada)✓ - Saliendo...");
 
         } catch (Throwable t) {
-            System.err.println("Error crítico en la inicialización: " + t.getMessage());
+            cliHelper.printError("Error crítico en la inicialización: " + t.getMessage());
             t.printStackTrace();
         } finally {
             scanner.close();
@@ -171,9 +171,9 @@ public class Main {
         boolean urgent = askYesNo("¿Prioridad urgente? (s/n): ");
         try {
             Ticket t = controller.createTicket(student, type, urgent);
-            System.out.println("✓(Ticket creado)✓ ID: " + t.getId() + " - " + t.getStudent() + " (" + t.getProcedureType() + ")");
+            cliHelper.printSuccess("✓(Ticket creado)✓ ID: " + t.getId() + " - " + t.getStudent() + " (" + t.getProcedureType() + ")");
         } catch (Exception e) {
-            System.err.println("Error al crear ticket: " + e.getMessage());
+            cliHelper.printError("Error al crear ticket: " + e.getMessage());
         }
     }
 
@@ -182,7 +182,7 @@ public class Main {
         try {
             Ticket t = controller.attendNext();
             if (t == null) {
-                System.out.println("?(info)? No hay tickets por atender.");
+                cliHelper.printInfo("?(info)? No hay tickets por atender.");
                 return;
             }
             System.out.println("Atendiendo ticket ID: " + t.getId() + " - " + t.getStudent() + " [" + t.getProcedureType() + "]");
@@ -199,26 +199,26 @@ public class Main {
                         String obs = askString("Observación: ");
                         try {
                             Note n = controller.addNoteToTicket(t, obs);
-                            System.out.println("✓(Nota añadida)✓ " + n.toString());
+                            cliHelper.printSuccess("✓(Nota añadida)✓ " + n.toString());
                         } catch (Exception ex) {
-                            System.err.println("Error al añadir nota: " + ex.getMessage());
+                            cliHelper.printError("Error al añadir nota: " + ex.getMessage());
                         }
                         break;
                     case 2:
                         try {
                             controller.changeTicketState(t.getId(), TicketState.PENDIENTE_DOCS);
-                            System.out.println("✓(Estado cambiado)✓ -> PENDIENTE_DOCS");
+                            cliHelper.printSuccess("✓(Estado cambiado)✓ -> PENDIENTE_DOCS");
                         } catch (Exception ex) {
-                            System.err.println("No se pudo cambiar estado: " + ex.getMessage());
+                            cliHelper.printError("No se pudo cambiar estado: " + ex.getMessage());
                         }
                         atendiendo = false;
                         break;
                     case 3:
                         try {
                             controller.finalizeTicket(t);
-                            System.out.println("✓(Ticket finalizado)✓ -> COMPLETADO");
+                            cliHelper.printSuccess("✓(Ticket finalizado)✓ -> COMPLETADO");
                         } catch (Exception ex) {
-                            System.err.println("Error al finalizar: " + ex.getMessage());
+                            cliHelper.printError("Error al finalizar: " + ex.getMessage());
                         }
                         atendiendo = false;
                         break;
@@ -230,9 +230,9 @@ public class Main {
             }
 
         } catch (NoSuchElementException ne) {
-            System.out.println("?(info)? No hay tickets por atender.");
+            cliHelper.printInfo("?(info)? No hay tickets por atender.");
         } catch (Exception e) {
-            System.err.println("Error en atender siguiente: " + e.getMessage());
+            cliHelper.printError("Error en atender siguiente: " + e.getMessage());
         }
     }
 
@@ -241,14 +241,14 @@ public class Main {
         try {
             List<Ticket> pendientes = controller.listPending();
             if (pendientes == null || pendientes.isEmpty()) {
-                System.out.println("?(info)? No hay tickets pendientes.");
+                cliHelper.printInfo("?(info)? No hay tickets pendientes.");
                 return;
             }
             for (Ticket t : pendientes) {
                 System.out.println(formatTicketLine(t));
             }
         } catch (Exception e) {
-            System.err.println("Error al listar pendientes: " + e.getMessage());
+            cliHelper.printError("Error al listar pendientes: " + e.getMessage());
         }
     }
 
@@ -257,7 +257,7 @@ public class Main {
         try {
             SimpleList<Ticket> history = controller.getAttentionQueue().getAttendedHistory();
             if (history == null || history.isEmpty()) {
-                System.out.println("?(info)? No hay historial registrado.");
+                cliHelper.printInfo("?(info)? No hay historial registrado.");
                 return;
             }
             Node<Ticket> cursor = history.head;
@@ -266,7 +266,7 @@ public class Main {
                 cursor = cursor.next;
             }
         } catch (Exception e) {
-            System.err.println("Error al consultar historial: " + e.getMessage());
+            cliHelper.printError("Error al consultar historial: " + e.getMessage());
         }
     }
 
@@ -276,7 +276,7 @@ public class Main {
         try {
             Ticket t = controller.findTicketById(id);
             if (t == null) {
-                System.out.println("!(error)! Ticket no encontrado.");
+                cliHelper.printError("!(error)! Ticket no encontrado.");
                 return;
             }
             System.out.println("Ticket: " + formatTicketLine(t));
@@ -289,33 +289,33 @@ public class Main {
                 int sel = askInt("Seleccione nuevo estado: ", 1, allowed.size());
                 TicketState target = allowed.get(sel-1);
                 controller.changeTicketState(id, target);
-                System.out.println("✓(Estado cambiado)✓ -> " + target);
+                cliHelper.printSuccess("✓(Estado cambiado)✓ -> " + target);
             } catch (Exception ex) {
-                System.out.println("No se pudo consultar StateMachine; seleccione estado manualmente:" + ex.getMessage());
+                cliHelper.printError("No se pudo consultar StateMachine; seleccione estado manualmente:" + ex.getMessage());
                 TicketState target = askTicketState();
                 controller.changeTicketState(id, target);
-                System.out.println("✓(Estado cambiado)✓ -> " + target);
+                cliHelper.printSuccess("✓(Estado cambiado)✓ -> " + target);
             }
         } catch (Exception e) {
-            System.err.println("Error al cambiar estado: " + e.getMessage());
+            cliHelper.printError("Error al cambiar estado: " + e.getMessage());
         }
     }
 
     private static void opcionUndo() {
         try {
             controller.undo();
-            System.out.println("✓(Deshacer)✓ Acción deshecha.");
+            cliHelper.printSuccess("✓(Deshacer)✓ Acción deshecha.");
         } catch (Exception e) {
-            System.err.println("No se pudo deshacer: " + e.getMessage());
+            cliHelper.printError("No se pudo deshacer: " + e.getMessage());
         }
     }
 
     private static void opcionRedo() {
         try {
             controller.redo();
-            System.out.println("✓(Rehacer)✓ Acción rehecha.");
+            cliHelper.printSuccess("✓(Rehacer)✓ Acción rehecha.");
         } catch (Exception e) {
-            System.err.println("No se pudo rehacer: " + e.getMessage());
+            cliHelper.printError("No se pudo rehacer: " + e.getMessage());
         }
     }
 
@@ -330,25 +330,25 @@ public class Main {
             case 1:
                 boolean saveCsv = askYesNo("¿Exportar CSV? (s/n): ");
                 String path = null;
-                if (saveCsv) path = askString("Ruta CSV (ej: pending_by_type.csv): ");
+                if (saveCsv) path = askString("Nombre del archivo (ej: pendiente_por_tipo): ");
                 controller.generateReportPendingByType(saveCsv, path);
-                System.out.println("Reporte generado.");
+                cliHelper.printSuccess("Reporte generado.");
                 break;
             case 2:
                 try {
-                    controller.getReportManager().showCompleted(controller.getAttentionQueue().getAttendedHistory(), true, "data/completed.csv");
-                    System.out.println("Reporte completados generado.");
+                    controller.getReportManager().showCompleted(controller.getAttentionQueue().getAttendedHistory(), true, "completed");
+                    cliHelper.printSuccess("Reporte completados generado.");
                 } catch (Exception e) {
-                    System.err.println("Error generando reporte completados: " + e.getMessage());
+                    cliHelper.printError("Error generando reporte completados: " + e.getMessage());
                 }
                 break;
             case 3:
                 int k = askInt("Top K (k): ", 1, 100);
                 try {
-                    controller.getReportManager().showTopKByNotes(controller.buildPendingSnapshotFromQueues(), k, true, "data/topk.csv");
-                    System.out.println("Top K generado.");
+                    controller.getReportManager().showTopKByNotes(controller.buildPendingSnapshotFromQueues(), k, true, "topk");
+                    cliHelper.printSuccess("Top K generado.");
                 } catch (Exception e) {
-                    System.err.println("Error al generar TopK: " + e.getMessage());
+                    cliHelper.printError("Error al generar TopK: " + e.getMessage());
                 }
                 break;
             case 4:
@@ -376,7 +376,7 @@ public class Main {
         System.out.print(prompt);
         String s = scanner.nextLine().trim();
         while (s.isEmpty()) {
-            System.out.println("!(This field cannot be empty)!");
+            cliHelper.printError("!(This field cannot be empty)!");
             System.out.print(prompt);
             s = scanner.nextLine().trim();
         }
@@ -390,23 +390,23 @@ public class Main {
             try {
                 int v = Integer.parseInt(line);
                 if (v < min || v > max) {
-                    System.out.println("!(Please select a valid option)!");
+                    cliHelper.printError("!(Please select a valid option)!");
                 } else {
                     return v;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("!(Please enter a number)!");
+                cliHelper.printError("!(Please enter a number)!");
             }
         }
     }
 
     private static boolean askYesNo(String prompt) {
         while (true) {
-            System.out.print(prompt);
+            cliHelper.printInfo(prompt);
             String r = scanner.nextLine().trim().toLowerCase();
             if (r.equals("s") || r.equals("si") || r.equals("y") || r.equals("yes")) return true;
             if (r.equals("n") || r.equals("no")) return false;
-            System.out.println("Responda 's' o 'n'.");
+            cliHelper.printAlert("Responda 's' o 'n'.");
         }
     }
 
