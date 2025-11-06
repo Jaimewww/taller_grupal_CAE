@@ -13,10 +13,9 @@
 6. [Persistencia y formatos sugeridos](#persistencia-y-formatos-sugeridos)
 7. [Reportes y exportación](#reportes-y-exportación)
 8. [Pruebas unitarias (clases a testear)](#pruebas-unitarias-clases-a-testear)
-9. [Evidencias / Capturas (placeholders)](#evidencias--capturas-placeholders)
+9. [Evidencias / Capturas](#evidencias--capturas)
 10. [Decisiones de diseño y casos borde](#decisiones-de-diseño-y-casos-borde)
-11. [Entrega](#entrega)
-12. [Contacto]
+11. [Contacto](#contacto)
 
 ---
 
@@ -35,7 +34,7 @@ El sistema **CAE** es una aplicación de consola para gestionar trámites de est
 
 ---
 
-## 4. Requisitos y tecnologías
+## Requisitos y tecnologías
 El proyecto se gestiona con **Apache Maven**.
 
 * **Java (OpenJDK 11+ / 17+):** Entorno de ejecución y compilación.
@@ -46,7 +45,7 @@ El proyecto se gestiona con **Apache Maven**.
 
 ---
 
-## 5. Instalación y ejecución
+## Instalación y ejecución
 
 El proyecto utiliza **Apache Maven** para la gestión de dependencias y el ciclo de vida de la construcción (*build*).
 
