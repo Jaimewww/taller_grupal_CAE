@@ -29,7 +29,7 @@ public class AddTicketCommand implements IAction {
         Queue<Ticket> tempQueue = new Queue<>();
         while (!ticketQueue.isEmpty()) {
             Ticket ticket = ticketQueue.dequeue();
-            if (ticket != newTicket) {
+            if (!ticket.equals(newTicket)) { // BIEN
                 tempQueue.enqueue(ticket);
             }
         }

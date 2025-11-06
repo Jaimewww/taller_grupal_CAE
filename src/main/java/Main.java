@@ -10,11 +10,11 @@ import util.*;
 import controller.*;
 
 
-/*
+/**
 * Esta clase Main implementa una interfaz de línea de comandos (CLI) para un sistema de gestión de tickets de atención.
 * Permite a los usuarios crear y gestionar tickets, atenderlos, cambiar su estado, deshacer/rehacer acciones y generar reportes.
 * Utiliza varias clases auxiliares para manejar la lógica del sistema, la persistencia de datos y la generación de reportes.
-* @Author Jaime Landázuri, Alejandro Padilla, Cael Soto, Wilson Palma
+* @author Jaime Landázuri, Alejandro Padilla, Cael Soto, Wilson Palma
 *
 * */
 
@@ -234,9 +234,9 @@ public class Main {
         }
     }
 
-    // Opción 3: listar tickets pendientes (snapshot)
+    // Opción 3: listar tickets pendientes
     private static void opcionListarPendientes() {
-        System.out.println("-- Tickets pendientes (snapshot) --");
+        System.out.println("-- Tickets pendientes 9--");
         try {
             List<Ticket> pendientes = controller.listPending();
             if (pendientes == null || pendientes.isEmpty()) {

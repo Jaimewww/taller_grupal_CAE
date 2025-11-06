@@ -134,12 +134,14 @@ public class PersistenceManager {
 
             while ((line = reader.readLine()) != null) {
                 try {
-                    String[] fields = line.split(",", 4);
-                    int id = Integer.parseInt(fields[0]);
-                    String student = fields[1].replace("\"", "");
-                    ProcedureType procedure = ProcedureType.valueOf(fields[2].replace("\"", ""));
+                    java.util.List<String> fields = parseCsvLine(line); // BIEN
 
-                    TicketState state = TicketState.valueOf(fields[3].replace("\"", ""));
+                    if (fields.size() < 4) continue; // Línea malformada
+
+                    int id = Integer.parseInt(fields.get(0));
+                    String student = fields.get(1); // Ya no necesita .replace("\"", "")
+                    ProcedureType procedure = ProcedureType.valueOf(fields.get(2));
+                    TicketState state = TicketState.valueOf(fields.get(3));
 
                     Ticket ticket = new Ticket(student, procedure);
                     ticket.setId(id);
@@ -190,5 +192,25 @@ public class PersistenceManager {
         } catch (IOException e) {
             System.err.println("Error reading notes for ticket " + ticket.getId() + ": " + e.getMessage());
         }
+    }
+
+    private java.util.List<String> parseCsvLine(String line) {
+        java.util.List<String> fields = new java.util.ArrayList<>();
+        StringBuilder currentField = new StringBuilder();
+        boolean inQuotes = false;
+
+        for (char c : line.toCharArray()) {
+            if (c == '\"') {
+                inQuotes = !inQuotes; // Maneja el inicio/fin de comillas
+            } else if (c == ',' && !inQuotes) {
+                // Es una coma fuera de comillas, fin del campo
+                fields.add(currentField.toString());
+                currentField.setLength(0); // Limpia para el próximo campo
+            } else {
+                currentField.append(c);
+            }
+        }
+        fields.add(currentField.toString()); // Añade el último campo
+        return fields;
     }
 }

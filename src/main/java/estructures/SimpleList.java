@@ -45,7 +45,8 @@ public class SimpleList<T> {
     public T find(T key){
         Node<T> current = head;
         while(current != null){
-            if(current.value == key){
+            // MAL: if(current.value == key){
+            if(current.value.equals(key)){ // BIEN
                 return current.value;
             }
             current = current.next;
@@ -59,12 +60,12 @@ public class SimpleList<T> {
         Node<T> prev = null;
 
         // Si el nodo a eliminar es el head
-        if(current != null && current.value == key){
+        if(current != null && current.value.equals(key)){ // BIEN
             head = current.next;
             return current.value;
         }
 
-        while(current != null && current.value != key){
+        while(current != null && !current.value.equals(key)){ // BIEN
             prev = current;
             current = current.next;
         }
